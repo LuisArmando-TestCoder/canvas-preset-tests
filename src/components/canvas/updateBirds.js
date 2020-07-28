@@ -1,5 +1,5 @@
 function watchBirdForPositionReset(bird) {
-    const c = this
+    const {c} = this
     if (bird.x - bird.size.x * 2 > c.width) bird.x = -bird.size.x
     if (bird.y - bird.size.y * 2 > c.height) bird.y = -bird.size.y
     if (bird.x + bird.size.x * 2 < 0) bird.x = c.width
@@ -100,26 +100,21 @@ function coheseTowardsCenter(targetBird, groupSummations) {
                             directionVector.y
                             * 
                             middleRotatingDirection
-                        ) * 5
-        targetBird.rot += 0
+                        ) * this.cohesionForce
     }
 }
 
 function updateBirds(targetBird) {
-    const {
-        c,
-        random
-    } = this
     setLocalGroup.call(this, targetBird)
     moveBird(targetBird)
-    watchBirdForPositionReset.call(c, targetBird)
+    watchBirdForPositionReset.call(this, targetBird)
     // addRandomRotation.call({random}, targetBird)
-    addRandomAcceleration.call({random}, targetBird)
+    addRandomAcceleration.call(this, targetBird)
     const groupSummations = getGroupSummations(targetBird)
     if (groupSummations) {
         setAlignment(targetBird, groupSummations)
         avoidCollission(targetBird, groupSummations)
-        coheseTowardsCenter(targetBird, groupSummations)
+        coheseTowardsCenter.call(this, targetBird, groupSummations)
     }
     this.ctx.fill()
 }

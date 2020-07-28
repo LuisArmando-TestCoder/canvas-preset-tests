@@ -24,8 +24,7 @@ export function getBird({
     x,
     y,
     rot,
-    acceleration,
-    // c
+    acceleration
 }) {
     return {
         x: x || 0,
@@ -47,15 +46,13 @@ export function getRandomBirds(amount, x, y) {
         random,
         c
     } = this
-    return [...new Array(amount)].map((_, i) => {
+    return [...new Array(amount)].map(() => {
         const bird = getBird({
             x: x || random(c.width),
             y: y || random(c.height),
             rot: random(360),
-            acceleration: random(3) + 2,
-            c: `rgb(255, 68, ${random(255)})`
+            acceleration: this.getAcceleration()
         })
-        console.log(bird, _, i)
         return bird
     })
 }

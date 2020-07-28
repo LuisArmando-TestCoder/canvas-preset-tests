@@ -21,14 +21,26 @@ export default {
         }) => {
 
             size();
+            const getAcceleration = () => random(3) + 2;
+            const cohesionForce = 5
             const birdsVision = 100
             const birdsAmount = 73
-            const birds = getRandomBirds.call({c, random}, birdsAmount);
+            const getRandomBirdsBind = {c, random, getAcceleration};
+            const birds = getRandomBirds.call(getRandomBirdsBind, birdsAmount);
+            const updateBirdsBind = {
+                c,
+                birds,
+                birdsVision,
+                get2DVerticesDistance,
+                random,
+                ctx,
+                cohesionForce
+            };
 
             window.addEventListener('click', e => {
                 birds.push(
                     getRandomBirds.call(
-                        {c, random},
+                        getRandomBirdsBind,
                         1,
                         e.clientX,
                         e.clientY
@@ -39,16 +51,8 @@ export default {
             draw(() => {
                 clear('#ffe');
                 renderGroup('lines', birds, bird => {
-                    // console.log(bird);
                     ctx.fillStyle = bird.c
-                }, updateBirds.bind({
-                    c,
-                    birds,
-                    birdsVision,
-                    get2DVerticesDistance,
-                    random,
-                    ctx
-                }));
+                }, updateBirds.bind(updateBirdsBind));
             });
         });
     }
