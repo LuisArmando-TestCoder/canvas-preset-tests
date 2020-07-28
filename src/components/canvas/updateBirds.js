@@ -121,6 +121,7 @@ function updateBirds(targetBird) {
         avoidCollission(targetBird, groupSummations)
         coheseTowardsCenter(targetBird, groupSummations)
     }
+    this.ctx.fill()
 }
 
 export default updateBirds

@@ -21,8 +21,8 @@ export default {
         }) => {
 
             size();
-            const birdsVision = 75
-            const birdsAmount = 70
+            const birdsVision = 100
+            const birdsAmount = 73
             const birds = getRandomBirds.call({c, random}, birdsAmount);
 
             window.addEventListener('click', e => {
@@ -37,17 +37,17 @@ export default {
             })
 
             draw(() => {
-                clear();
+                clear('#ffe');
                 renderGroup('lines', birds, bird => {
                     // console.log(bird);
                     ctx.fillStyle = bird.c
-                    ctx.fill()
                 }, updateBirds.bind({
                     c,
                     birds,
                     birdsVision,
                     get2DVerticesDistance,
-                    random
+                    random,
+                    ctx
                 }));
             });
         });

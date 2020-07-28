@@ -36,7 +36,7 @@ export function getBird({
             x: 1,
             y: 1
         },
-        c: '#000',
+        c: '#001',
         group: bird,
         localGroup: []
     }
